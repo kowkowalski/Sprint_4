@@ -53,7 +53,7 @@ public class ExtraTests {
         driver.switchTo().window(originalWindow);
     }
 
-    // Валидатор имени: используем OrderPageStepOne POM
+    
     @Test
     public void firstNameFieldCannotBeEmpty() {
         mainPage.clickTopOrderButton();
@@ -72,7 +72,7 @@ public class ExtraTests {
     @Test
     public void invalidOrderNumberShowsError() {
         OrderStatusPage status = new OrderStatusPage(driver);
-        status.open(); // метод откроет /track-order
+        status.open(); 
         status.findOrder("999999");
         assertEquals("Заказ не найден", status.getNotFoundText());
     }

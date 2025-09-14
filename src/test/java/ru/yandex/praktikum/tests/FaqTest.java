@@ -43,7 +43,11 @@ public class FaqTest {
     @Test
     public void faqItemShouldOpenAnswer() throws InterruptedException {
         mainPage.clickFaqQuestion(index);
+<<<<<<< HEAD
         Thread.sleep(300); 
+=======
+        Thread.sleep(300);
+>>>>>>> 6a705c9 (Fix reviewer comments)
         String answer = mainPage.getFaqAnswerText(index);
         assertTrue("Answer for FAQ index " + index + " should not be empty", answer != null && !answer.trim().isEmpty());
     }

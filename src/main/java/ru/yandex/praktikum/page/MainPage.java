@@ -11,7 +11,7 @@ public class MainPage {
         this.driver = driver;
     }
 
-    // Локаторы (camelCase, private final)
+
     private final By orderButtonTop = By.xpath("(//button[text()='Заказать'])[1]");
     private final By orderButtonBottom = By.xpath("(//button[text()='Заказать'])[2]");
     private final By cookieButton = By.id("rcc-confirm-button");

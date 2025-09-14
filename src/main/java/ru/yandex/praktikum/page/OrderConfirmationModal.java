@@ -11,7 +11,7 @@ public class OrderConfirmationModal {
         this.driver = driver;
     }
 
-    // Более точный локатор заголовка модалки, который содержит текст "Заказ оформлен"
+
     private final By confirmationTitle = By.xpath("//div[contains(@class,'Order_ModalHeader') and contains(., 'Заказ оформлен')]");
     private final By orderNumber = By.xpath("//div[contains(@class,'Order_Text') and contains(., 'Заказ')]/following-sibling::div");
 

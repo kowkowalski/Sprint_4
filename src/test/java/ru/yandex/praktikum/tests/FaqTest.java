@@ -43,7 +43,7 @@ public class FaqTest {
     @Test
     public void faqItemShouldOpenAnswer() throws InterruptedException {
         mainPage.clickFaqQuestion(index);
-        Thread.sleep(300); // лучше заменить на WebDriverWait при желании
+        Thread.sleep(300); 
         String answer = mainPage.getFaqAnswerText(index);
         assertTrue("Answer for FAQ index " + index + " should not be empty", answer != null && !answer.trim().isEmpty());
     }

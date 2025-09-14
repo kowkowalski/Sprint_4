@@ -3,15 +3,17 @@ package ru.yandex.praktikum.tests;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.yandex.praktikum.driver.DriverFactory;
 import ru.yandex.praktikum.page.MainPage;
 import ru.yandex.praktikum.page.OrderPageStepOne;
+import ru.yandex.praktikum.page.OrderStatusPage;
 
 import static org.junit.Assert.assertEquals;
 
 public class ExtraTests {
+
+    private static final String BASE_URL = "https://qa-scooter.praktikum-services.ru/";
 
     private WebDriver driver;
     private MainPage mainPage;
@@ -20,7 +22,7 @@ public class ExtraTests {
     public void setUp() {
         driver = DriverFactory.createChrome();
         mainPage = new MainPage(driver);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.get(BASE_URL);
         mainPage.acceptCookies();
     }
 
@@ -31,60 +33,47 @@ public class ExtraTests {
         }
     }
 
-    //Проверка логотипа Самокат
     @Test
     public void scooterLogoRedirectsToMainPage() {
         mainPage.clickScooterLogo();
-        String currentUrl = driver.getCurrentUrl();
-        assertEquals("https://qa-scooter.praktikum-services.ru/", currentUrl);
+        assertEquals(BASE_URL, driver.getCurrentUrl());
     }
 
-    // Проверка логотипа Яндекс
     @Test
     public void yandexLogoOpensInNewTab() {
         String originalWindow = driver.getWindowHandle();
         mainPage.clickYandexLogo();
-
-
         for (String windowHandle : driver.getWindowHandles()) {
             if (!windowHandle.equals(originalWindow)) {
                 driver.switchTo().window(windowHandle);
                 break;
             }
         }
-
-        String currentUrl = driver.getCurrentUrl();
-        assertEquals("https://yandex.ru/", currentUrl);
-
-
+        assertEquals("https://yandex.ru/", driver.getCurrentUrl());
         driver.switchTo().window(originalWindow);
     }
 
-    //Проверка ошибки для поля "Имя"
+    // Валидатор имени: используем OrderPageStepOne POM
     @Test
     public void firstNameFieldCannotBeEmpty() {
         mainPage.clickTopOrderButton();
-
         OrderPageStepOne stepOne = new OrderPageStepOne(driver);
+
         stepOne.fillLastName("Ковалев");
         stepOne.fillAddress("ул. Ленина, 5");
         stepOne.fillMetro("Сокол");
         stepOne.fillPhone("+79999999999");
         stepOne.clickNextButton();
 
-        String errorText = driver.findElement(By.xpath("//div[text()='Введите имя']")).getText();
+        String errorText = stepOne.getFirstNameError();
         assertEquals("Введите имя", errorText);
     }
 
-    //Проверка неверного номера заказа
     @Test
     public void invalidOrderNumberShowsError() {
-        driver.get("https://qa-scooter.praktikum-services.ru/track-order");
-
-        driver.findElement(By.xpath("//input[@placeholder='Введите номер заказа']")).sendKeys("999999");
-        driver.findElement(By.xpath("//button[text()='Проверить']")).click();
-
-        String errorText = driver.findElement(By.xpath("//div[contains(text(),'Заказ не найден')]")).getText();
-        assertEquals("Заказ не найден", errorText);
+        OrderStatusPage status = new OrderStatusPage(driver);
+        status.open(); // метод откроет /track-order
+        status.findOrder("999999");
+        assertEquals("Заказ не найден", status.getNotFoundText());
     }
 }

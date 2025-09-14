@@ -11,12 +11,12 @@ public class MainPage {
         this.driver = driver;
     }
 
-    // Локаторы
-    private final By ORDER_BUTTON_TOP = By.xpath("//button[text()='Заказать'][1]");
-    private final By ORDER_BUTTON_BOTTOM = By.xpath("//button[text()='Заказать'][2]");
-    private final By COOKIE_BUTTON = By.id("rcc-confirm-button");
-    private final By SCOOTER_LOGO = By.className("Header_LogoScooter__3lsAR");
-    private final By YANDEX_LOGO = By.className("Header_LogoYandex__3TSOI");
+    // Локаторы (camelCase, private final)
+    private final By orderButtonTop = By.xpath("(//button[text()='Заказать'])[1]");
+    private final By orderButtonBottom = By.xpath("(//button[text()='Заказать'])[2]");
+    private final By cookieButton = By.id("rcc-confirm-button");
+    private final By scooterLogo = By.className("Header_LogoScooter__3lsAR");
+    private final By yandexLogo = By.className("Header_LogoYandex__3TSOI");
 
     private By faqQuestion(int index) {
         return By.id("accordion__heading-" + index);
@@ -28,15 +28,17 @@ public class MainPage {
 
     // Методы
     public void acceptCookies() {
-        driver.findElement(COOKIE_BUTTON).click();
+        if (!driver.findElements(cookieButton).isEmpty()) {
+            driver.findElement(cookieButton).click();
+        }
     }
 
     public void clickTopOrderButton() {
-        driver.findElement(ORDER_BUTTON_TOP).click();
+        driver.findElement(orderButtonTop).click();
     }
 
     public void clickBottomOrderButton() {
-        driver.findElement(ORDER_BUTTON_BOTTOM).click();
+        driver.findElement(orderButtonBottom).click();
     }
 
     public void clickFaqQuestion(int index) {
@@ -48,10 +50,10 @@ public class MainPage {
     }
 
     public void clickScooterLogo() {
-        driver.findElement(SCOOTER_LOGO).click();
+        driver.findElement(scooterLogo).click();
     }
 
     public void clickYandexLogo() {
-        driver.findElement(YANDEX_LOGO).click();
+        driver.findElement(yandexLogo).click();
     }
 }

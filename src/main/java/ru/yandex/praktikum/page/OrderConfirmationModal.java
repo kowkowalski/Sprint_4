@@ -11,14 +11,22 @@ public class OrderConfirmationModal {
         this.driver = driver;
     }
 
-    private final By CONFIRMATION_TITLE = By.className("Order_ModalHeader__3FDaJ");
-    private final By STATUS_BUTTON = By.xpath("//button[text()='Посмотреть статус']");
+    // Более точный локатор заголовка модалки, который содержит текст "Заказ оформлен"
+    private final By confirmationTitle = By.xpath("//div[contains(@class,'Order_ModalHeader') and contains(., 'Заказ оформлен')]");
+    private final By orderNumber = By.xpath("//div[contains(@class,'Order_Text') and contains(., 'Заказ')]/following-sibling::div");
 
     public String getConfirmationTitle() {
-        return driver.findElement(CONFIRMATION_TITLE).getText();
+        return driver.findElement(confirmationTitle).getText();
     }
 
-    public void clickStatusButton() {
-        driver.findElement(STATUS_BUTTON).click();
+    public boolean isConfirmationVisible() {
+        return !driver.findElements(confirmationTitle).isEmpty();
+    }
+
+    public String getOrderNumber() {
+        if (!driver.findElements(orderNumber).isEmpty()) {
+            return driver.findElement(orderNumber).getText();
+        }
+        return "";
     }
 }

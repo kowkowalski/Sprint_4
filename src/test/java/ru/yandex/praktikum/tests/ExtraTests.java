@@ -53,11 +53,7 @@ public class ExtraTests {
         driver.switchTo().window(originalWindow);
     }
 
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 6a705c9 (Fix reviewer comments)
     @Test
     public void firstNameFieldCannotBeEmpty() {
         mainPage.clickTopOrderButton();

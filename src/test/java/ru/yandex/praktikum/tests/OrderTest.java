@@ -27,7 +27,7 @@ public class OrderTest {
     private OrderConfirmationModal confirmation;
 
     @Parameterized.Parameter(0)
-    public String buttonPosition; // "top" или "bottom"
+    public String buttonPosition;
     @Parameterized.Parameter(1)
     public String firstName;
     @Parameterized.Parameter(2)
@@ -50,9 +50,7 @@ public class OrderTest {
     @Parameterized.Parameters
     public static Collection<Object[]> testData() {
         return Arrays.asList(new Object[][]{
-                {"top", "Иван", "Иванов", "ул. Ленина, 1", "Сокол", "+79991112233", "10.09.2025", "сутки", "black", "Позвоните за час"},
-                {"bottom", "Иван", "Иванов", "ул. Ленина, 1", "Сокол", "+79991112233", "10.09.2025", "сутки", "black", "Позвоните за час"},
-                {"top", "Мария", "Петрова", "ул. Гагарина, 5", "Тимирязевская", "+79992223344", "12.09.2025", "двое суток", "grey", "Не звонить"},
+                {"top", "Кирилл", "Ковалев", "ул. Ленина, 1", "Сокол", "+79991112233", "10.09.2025", "сутки", "black", "Позвоните за час"},
                 {"bottom", "Мария", "Петрова", "ул. Гагарина, 5", "Тимирязевская", "+79992223344", "12.09.2025", "двое суток", "grey", "Не звонить"}
         });
     }
@@ -68,7 +66,7 @@ public class OrderTest {
         mainPage.acceptCookies();
     }
 
-    private void makeOrder() throws InterruptedException {
+    private void makeOrder() {
         if ("top".equalsIgnoreCase(buttonPosition)) {
             mainPage.clickTopOrderButton();
         } else {
@@ -92,7 +90,7 @@ public class OrderTest {
     }
 
     @Test
-    public void orderFlow() throws InterruptedException {
+    public void orderFlow() {
         makeOrder();
         assertEquals("Заказ оформлен", confirmation.getConfirmationTitle());
     }

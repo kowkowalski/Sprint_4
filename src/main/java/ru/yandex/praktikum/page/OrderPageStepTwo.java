@@ -23,7 +23,6 @@ public class OrderPageStepTwo {
         return By.xpath("//div[@class='Dropdown-option' and text()='" + text + "']");
     }
 
-    // Методы
     public void fillDate(String date) {
         driver.findElement(DATE_INPUT).sendKeys(date);
     }

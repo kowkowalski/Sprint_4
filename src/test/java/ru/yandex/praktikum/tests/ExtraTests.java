@@ -33,16 +33,19 @@ public class ExtraTests {
         }
     }
 
+    // Проверка логотипа Самокат
     @Test
     public void scooterLogoRedirectsToMainPage() {
         mainPage.clickScooterLogo();
         assertEquals(BASE_URL, driver.getCurrentUrl());
     }
 
+    // Проверка логотипа Яндекс
     @Test
     public void yandexLogoOpensInNewTab() {
         String originalWindow = driver.getWindowHandle();
         mainPage.clickYandexLogo();
+
         for (String windowHandle : driver.getWindowHandles()) {
             if (!windowHandle.equals(originalWindow)) {
                 driver.switchTo().window(windowHandle);
@@ -53,7 +56,7 @@ public class ExtraTests {
         driver.switchTo().window(originalWindow);
     }
 
-
+    // Проверка ошибки для поля "Имя"
     @Test
     public void firstNameFieldCannotBeEmpty() {
         mainPage.clickTopOrderButton();
@@ -69,10 +72,11 @@ public class ExtraTests {
         assertEquals("Введите имя", errorText);
     }
 
+    // Проверка неверного номера заказа
     @Test
     public void invalidOrderNumberShowsError() {
         OrderStatusPage status = new OrderStatusPage(driver);
-        status.open(); 
+        status.open();
         status.findOrder("999999");
         assertEquals("Заказ не найден", status.getNotFoundText());
     }

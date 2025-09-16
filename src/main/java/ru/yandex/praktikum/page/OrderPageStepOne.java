@@ -11,16 +11,14 @@ public class OrderPageStepOne {
         this.driver = driver;
     }
 
-    // Локаторы
     private final By firstNameInput = By.xpath("//input[@placeholder='* Имя']");
     private final By lastNameInput = By.xpath("//input[@placeholder='* Фамилия']");
     private final By addressInput = By.xpath("//input[@placeholder='* Адрес: куда привезти заказ']");
     private final By metroInput = By.xpath("//input[@placeholder='* Станция метро']");
     private final By phoneInput = By.xpath("//input[@placeholder='* Телефон: на него позвонит курьер']");
     private final By nextButton = By.xpath("//button[text()='Далее']");
-    private final By firstNameError = By.xpath("//div[text()='Введите имя']"); // локатор ошибки
+    private final By firstNameError = By.xpath("//div[text()='Введите имя']");
 
-    // Методы
     public void fillFirstName(String firstName) {
         driver.findElement(firstNameInput).sendKeys(firstName);
     }
